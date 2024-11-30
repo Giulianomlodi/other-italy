@@ -29,7 +29,7 @@ const Hero = () => {
 
     if (!isConnected) {
       return (
-        <div className="w-full max-w-4xl mx-auto px-4">
+        <div className="min-h-screen w-full max-w-4xl mx-auto px-4">
           <Alert className="bg-black/50 border border-yellow-500/50">
             <AlertDescription className={deliusSwashCaps.className}>
               Please connect your wallet to mint NFTs
@@ -41,7 +41,7 @@ const Hero = () => {
 
     if (!addresses.BORED_ITALY_ADDRESS) {
       return (
-        <div className="w-full max-w-4xl mx-auto px-4">
+        <div className="min-h-screen w-full max-w-4xl mx-auto px-4">
           <Alert variant="destructive" className="bg-black/50 border border-red-500/50">
             <AlertDescription className={deliusSwashCaps.className}>
               Contract configuration not found for the current network.
