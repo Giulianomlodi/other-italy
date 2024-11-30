@@ -18,8 +18,8 @@ export const useChainConfig = () => {
           .NEXT_PUBLIC_BANANA_TOKEN_ADDRESS as `0x${string}`,
         GRAPHQL_ENDPOINT:
           "https://subgraph.satsuma-prod.com/1fbdab357f8a/giuliano--794168/banana-graph/api",
-        BORED_ITALY_ADDRESS:
-          "0x28097aeC239a39B82756064fF2EE132dA4c4bBAb" as `0x${string}`,
+        BORED_ITALY_ADDRESS: process.env
+          .NEXT_PUBLIC_BORED_ITALY_ADDRESS as `0x${string}`,
       };
     }
     // Curtis (Test Network)
@@ -33,8 +33,8 @@ export const useChainConfig = () => {
           .NEXT_PUBLIC_TEST_BANANA_TOKEN_ADDRESS as `0x${string}`,
         GRAPHQL_ENDPOINT:
           "https://subgraph.satsuma-prod.com/1fbdab357f8a/giuliano--794168/test-banana-graph/api",
-        BORED_ITALY_ADDRESS:
-          "0x1234567890123456789012345678901234567890" as `0x${string}`,
+        BORED_ITALY_ADDRESS: process.env
+          .NEXT_PUBLIC_BORED_ITALY_TEST_ADDRESS as `0x${string}`,
       };
     }
 
