@@ -29,7 +29,7 @@ const Hero = () => {
 
     if (!isConnected) {
       return (
-        <div className="min-h-screen w-full max-w-4xl mx-auto px-4">
+        <div className="min-h-screen w-full max-w-4xl mx-auto px-4 py-20">
           <Alert className="bg-black/50 border border-yellow-500/50">
             <AlertDescription className={deliusSwashCaps.className}>
               Please connect your wallet to mint NFTs
