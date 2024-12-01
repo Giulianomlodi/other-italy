@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAccount } from 'wagmi';
 import { useChainConfig } from '@/config/network';
 import NFTMintingInterface from '@/components/web3/boredComps/NFTMintingInterface';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 // Move font initialization outside component
 const deliusSwashCaps = Inter({
@@ -30,10 +31,12 @@ const Hero = () => {
     if (!isConnected) {
       return (
         <div className="min-h-screen w-full max-w-4xl mx-auto px-4 py-20 flex items-center justify-center">
-          <Alert className="bg-black/50 border border-yellow-500/50">
+          <Alert className="bg-black/50 border border-yellow-500/50 text-white flex items-center justify-center gap-8">
             <AlertDescription className={deliusSwashCaps.className}>
               Please connect your wallet to mint NFTs
+
             </AlertDescription>
+            <ConnectButton />
           </Alert>
         </div>
       );
