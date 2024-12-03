@@ -22,7 +22,7 @@ const Hero = () => {
 
 
   return (
-    <div className="min-h-screen w-full px-20">
+    <div className="min-h-screen w-full pt-4 px-10 md:px-20">
 
       <StakingBanner
 
