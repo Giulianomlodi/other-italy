@@ -1,4 +1,3 @@
-// useAdmin.ts
 import { useEffect, useState } from "react";
 import { useAccount, useWriteContract, useReadContract } from "wagmi";
 import { italyABI } from "@/other-italy-abi";
@@ -40,6 +39,19 @@ export const useAdmin = (contractAddress: `0x${string}`) => {
     functionName: "topMembersMerkleRoot",
   });
 
+  // Read base URIs directly using new getter functions
+  const { data: membersBaseURI } = useReadContract({
+    address: contractAddress,
+    abi: italyABI,
+    functionName: "membersBaseURI",
+  });
+
+  const { data: topMembersBaseURI } = useReadContract({
+    address: contractAddress,
+    abi: italyABI,
+    functionName: "topMembersBaseURI",
+  });
+
   // Write contract functions
   const { writeContract: write, isPending } = useWriteContract();
 
@@ -60,7 +72,25 @@ export const useAdmin = (contractAddress: `0x${string}`) => {
         topMembersMerkleRoot: topMembersMerkleRoot as string,
       }));
     }
-  }, [activeMint, membersMerkleRoot, topMembersMerkleRoot]);
+    if (membersBaseURI) {
+      setAdminState((prev) => ({
+        ...prev,
+        membersBaseURI: membersBaseURI as string,
+      }));
+    }
+    if (topMembersBaseURI) {
+      setAdminState((prev) => ({
+        ...prev,
+        topMembersBaseURI: topMembersBaseURI as string,
+      }));
+    }
+  }, [
+    activeMint,
+    membersMerkleRoot,
+    topMembersMerkleRoot,
+    membersBaseURI,
+    topMembersBaseURI,
+  ]);
 
   // Admin functions
   const setActiveMint = async (state: boolean) => {
