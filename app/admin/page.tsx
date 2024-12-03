@@ -10,7 +10,7 @@ import WhitelistDashboard from '@/components/admin/whitelistDashboard';
 import Admin from '@/components/web3/Admin/Admin';
 
 
-const contractAddress = '0xCbeB818102BCcA9D60C00B4ea81946b750e36141' as `0x${string}`;
+const contractAddress = process.env.NEXT_PUBLIC_BORED_ITALY_TEST_ADDRESS as `0x${string}`;
 
 const deliusSwashCaps = Delius_Swash_Caps({
     weight: '400',
@@ -26,7 +26,7 @@ const Hero = () => {
                     <div className="w-full flex flex-col justify-center items-center p-6 md:p-12 mt-0 md:mt-0 space-y-8 z-10">
                         <div className="text-center max-w-md space-y-4">
                             <p className={`text-lg ${deliusSwashCaps.className}`}>
-                                Mint your <strong>Banana 🍌</strong>
+
                             </p>
                         </div>
                         <div className="w-full max-w-xs space-y-4">

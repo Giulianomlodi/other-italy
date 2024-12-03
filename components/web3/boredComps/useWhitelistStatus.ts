@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+// useWhitelistStatus.ts
+import { useState, useEffect, useMemo } from "react";
 import { MerkleTree } from "merkletreejs";
 import { keccak256, encodePacked } from "viem";
 
@@ -20,79 +21,80 @@ export const useWhitelistStatus = (
   address: string | undefined,
   whitelistConfig: WhitelistConfig
 ) => {
-  const [status, setStatus] = useState<WhitelistStatus>({
-    isMemberWhitelisted: false,
-    isTopMemberWhitelisted: false,
-    memberMerkleProof: [],
-    topMemberMerkleProof: [],
-    memberMerkleRoot: "",
-    topMemberMerkleRoot: "",
-  });
-
-  useEffect(() => {
-    const generateMerkleData = (
-      addresses: `0x${string}`[],
-      type: "member" | "topMember"
-    ) => {
+  // Create Merkle trees once and memoize them
+  const { memberTree, topMemberTree } = useMemo(() => {
+    const createMerkleTree = (addresses: `0x${string}`[]) => {
       const leafNodes = addresses.map((addr) =>
         keccak256(
           encodePacked(["address"], [addr.toLowerCase() as `0x${string}`])
         )
       );
-      const merkleTree = new MerkleTree(leafNodes, keccak256, {
-        sortPairs: true,
-      });
-      const rootHash = merkleTree.getHexRoot();
+      return new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+    };
 
-      // Console logs for debugging
-      console.log(
-        `${type === "member" ? "Members" : "Top Members"} Merkle Root:`,
-        rootHash
-      );
+    return {
+      memberTree: createMerkleTree(whitelistConfig.members),
+      topMemberTree: createMerkleTree(whitelistConfig.topMembers),
+    };
+  }, [whitelistConfig.members, whitelistConfig.topMembers]);
 
-      if (!address) return { verified: false, proof: [], root: rootHash };
+  const [status, setStatus] = useState<WhitelistStatus>({
+    isMemberWhitelisted: false,
+    isTopMemberWhitelisted: false,
+    memberMerkleProof: [],
+    topMemberMerkleProof: [],
+    memberMerkleRoot: memberTree.getHexRoot(),
+    topMemberMerkleRoot: topMemberTree.getHexRoot(),
+  });
 
+  useEffect(() => {
+    if (!address) {
+      setStatus((prev) => ({
+        ...prev,
+        isMemberWhitelisted: false,
+        isTopMemberWhitelisted: false,
+        memberMerkleProof: [],
+        topMemberMerkleProof: [],
+      }));
+      return;
+    }
+
+    const verifyAddress = (tree: MerkleTree) => {
       const claimingAddress = keccak256(
         encodePacked(["address"], [address.toLowerCase() as `0x${string}`])
       );
-      const hexProof = merkleTree.getHexProof(claimingAddress);
-      const verified = merkleTree.verify(hexProof, claimingAddress, rootHash);
+      const hexProof = tree.getHexProof(claimingAddress);
+      const rootHash = tree.getHexRoot();
+      const verified = tree.verify(hexProof, claimingAddress, rootHash);
 
-      // Console logs for debugging
-      console.log(`Address:`, address);
-      console.log(
-        `Is ${type === "member" ? "Member" : "Top Member"} Whitelisted:`,
-        verified
-      );
-      console.log(
-        `${type === "member" ? "Member" : "Top Member"} Merkle Proof:`,
-        hexProof
-      );
-
-      return { verified, proof: hexProof as `0x${string}`[], root: rootHash };
+      return { verified, proof: hexProof as `0x${string}`[] };
     };
 
-    console.log("------------------------------------------------");
-    console.log("Generating Merkle Proofs for address:", address);
-    console.log("------------------------------------------------");
+    const memberVerification = verifyAddress(memberTree);
+    const topMemberVerification = verifyAddress(topMemberTree);
 
-    const memberData = generateMerkleData(whitelistConfig.members, "member");
-    const topMemberData = generateMerkleData(
-      whitelistConfig.topMembers,
-      "topMember"
-    );
+    // Debug logging in development only
+    if (process.env.NODE_ENV === "development") {
+      console.group("Whitelist Verification");
+      console.log("Address:", address);
+      console.log("Member Merkle Root:", memberTree.getHexRoot());
+      console.log("Top Member Merkle Root:", topMemberTree.getHexRoot());
+      console.log("Is Member Whitelisted:", memberVerification.verified);
+      console.log("Is Top Member Whitelisted:", topMemberVerification.verified);
+      console.log("Member Merkle Proof:", memberVerification.proof);
+      console.log("Top Member Merkle Proof:", topMemberVerification.proof);
+      console.groupEnd();
+    }
 
     setStatus({
-      isMemberWhitelisted: memberData.verified,
-      isTopMemberWhitelisted: topMemberData.verified,
-      memberMerkleProof: memberData.proof,
-      topMemberMerkleProof: topMemberData.proof,
-      memberMerkleRoot: memberData.root,
-      topMemberMerkleRoot: topMemberData.root,
+      isMemberWhitelisted: memberVerification.verified,
+      isTopMemberWhitelisted: topMemberVerification.verified,
+      memberMerkleProof: memberVerification.proof,
+      topMemberMerkleProof: topMemberVerification.proof,
+      memberMerkleRoot: memberTree.getHexRoot(),
+      topMemberMerkleRoot: topMemberTree.getHexRoot(),
     });
-  }, [address, whitelistConfig]);
+  }, [address, memberTree, topMemberTree]);
 
   return status;
 };
-
-export default useWhitelistStatus;
