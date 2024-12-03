@@ -153,7 +153,7 @@ export default function NFTMintingInterface({
                 <Card className="bg-black/50 backdrop-blur border border-white/10">
                     <CardHeader>
                         <CardTitle className={`text-2xl text-white ${inter.className}`}>
-                            Member NFT
+                            SILVER ANCIENT ARTIFACT
                         </CardTitle>
                         <CardDescription className="text-gray-300">
                             Join our exclusive community of Italian culture enthusiasts
@@ -210,7 +210,7 @@ export default function NFTMintingInterface({
                 <Card className="bg-black/50 backdrop-blur border border-white/10">
                     <CardHeader>
                         <CardTitle className={`text-2xl text-white ${inter.className}`}>
-                            Top Member NFT
+                            GOLD ANCIENT ARTIFACT.
                         </CardTitle>
                         <CardDescription className="text-gray-300">
                             Experience the pinnacle of Italian cultural membership
