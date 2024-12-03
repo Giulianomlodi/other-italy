@@ -21,30 +21,25 @@ const MenuVoices: React.FC<MenuVoicesProps> = ({ onItemClick }) => {
     <nav className={styles.nav}>
       <NavigationMenu>
         <NavigationMenuList className={styles.menuList}>
-          {/* <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link href="/lite-paper" onClick={handleClick} className={styles.hideOnMobile}>
-              Lite Paper
+          <NavigationMenuItem className={styles.hideOnMobile}>
+            <Link href="/mint" onClick={handleClick} className={styles.hideOnMobile}>
+              Mint Membership
             </Link>
 
           </NavigationMenuItem>
           <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link href="/first-mission" onClick={handleClick} className={styles.hideOnMobile}>
-              First Mission
+            <Link href="/#" onClick={handleClick} className={styles.hideOnMobile}>
+              Fumetto 1
             </Link>
 
           </NavigationMenuItem>
           <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link href="/dashboard" onClick={handleClick} className={styles.hideOnMobile}>
-              Dashboard
+            <Link href="/#" onClick={handleClick} className={styles.hideOnMobile}>
+              Fumetto 2
             </Link>
 
           </NavigationMenuItem>
-          <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link href="/rarity" onClick={handleClick} className={styles.hideOnMobile}>
-              Rarity Checker
-            </Link>
 
-          </NavigationMenuItem> */}
           <NavigationMenuItem className={styles.socialIcons}>
             <a
               href="https://x.com/other_italy"
