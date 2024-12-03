@@ -18,16 +18,12 @@ const inter = Inter({
 
 const whitelistConfig = {
     members: [
-        "0xaaa2da255df9ee74c7075bcb6d81f97940908a5d",
-        "0x29469395eaf6f95920e59f858042f0e28d98a20b",
         "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d",
         "0x129EBc4A440a15abA29978A22F676b2795a851c6",
+        "0xA9b1A919528F1540CBf6FdB395A22501CcB7Df37",
     ] as `0x${string}`[],
     topMembers: [
-        "0xe2a83b15fc300d8457eb9e176f98d92a8ff40a49",
-        "0xa858ddc0445d8131dac4d1de01f834ffcba52ef1",
         "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d",
-        "0xFed314FFc6Dd40315F7D5c27a03f223F2297a7D7",
     ] as `0x${string}`[]
 };
 
