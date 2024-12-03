@@ -27,7 +27,7 @@ const MenuVoices: React.FC<MenuVoicesProps> = ({ onItemClick }) => {
             </Link>
 
           </NavigationMenuItem>
-          <NavigationMenuItem className={styles.hideOnMobile}>
+          {/* <NavigationMenuItem className={styles.hideOnMobile}>
             <Link href="/#" onClick={handleClick} className={styles.hideOnMobile}>
               Fumetto 1
             </Link>
@@ -38,7 +38,7 @@ const MenuVoices: React.FC<MenuVoicesProps> = ({ onItemClick }) => {
               Fumetto 2
             </Link>
 
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
 
           <NavigationMenuItem className={styles.socialIcons}>
             <a
