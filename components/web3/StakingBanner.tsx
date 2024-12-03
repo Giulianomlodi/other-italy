@@ -23,7 +23,7 @@ const StakingBanner: React.FC<ImageProps> = (props) => (
 
         </Card>
         <div className="inset-0 mt-10 bg-opacity-40 flex flex-col items-center justify-center md:px-20 ">
-            <h1 className="text-4xl font-bold text-white tracking-wider text-center mt-20 mb-4">
+            <h1 className="text-4xl font-bold text-white tracking-wider text-center  mt-10 md:mt-20 mb-4">
                 Welcome to Other Italy
             </h1>
             <p className="text-lg text-white text-center mt-4 mb-10 ">
