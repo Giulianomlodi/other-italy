@@ -34,7 +34,7 @@ const StakingBanner: React.FC<ImageProps> = (props) => (
                 Needless to say, our token will give you access to some exclusive “things” 🤣
             </p>
             <Link href="/mint" className=" mb-40 px-6 py-2 bg-[#000C54] text-white rounded hover:opacity-70 transition">
-                Mint your membership Now
+                Mint your membership
             </Link>
         </div>
 
