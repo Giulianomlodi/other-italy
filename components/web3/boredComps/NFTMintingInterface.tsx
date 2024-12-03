@@ -213,7 +213,7 @@ export default function NFTMintingInterface({
                             GOLD ANCIENT ARTIFACT
                         </CardTitle>
                         <CardDescription className="text-gray-300">
-                            Experience the pinnacle of Italian cultural membership
+                            Experience the top of Italian culture membership
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
