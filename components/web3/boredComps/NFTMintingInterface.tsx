@@ -210,7 +210,7 @@ export default function NFTMintingInterface({
                 <Card className="bg-black/50 backdrop-blur border border-white/10">
                     <CardHeader>
                         <CardTitle className={`text-2xl text-white ${inter.className}`}>
-                            GOLD ANCIENT ARTIFACT.
+                            GOLD ANCIENT ARTIFACT
                         </CardTitle>
                         <CardDescription className="text-gray-300">
                             Experience the pinnacle of Italian cultural membership
