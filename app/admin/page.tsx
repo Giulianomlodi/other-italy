@@ -7,6 +7,10 @@ import AdminMint from '@/components/web3/AdminMint';
 import AdminToggleMint from '@/components/web3/AdminToggleMint';
 import AdminWithdraw from '@/components/web3/AdminWithdraw';
 import WhitelistDashboard from '@/components/admin/whitelistDashboard';
+import Admin from '@/components/web3/Admin/Admin';
+
+
+const contractAddress = '0xCbeB818102BCcA9D60C00B4ea81946b750e36141' as `0x${string}`;
 
 const deliusSwashCaps = Delius_Swash_Caps({
     weight: '400',
@@ -26,11 +30,12 @@ const Hero = () => {
                             </p>
                         </div>
                         <div className="w-full max-w-xs space-y-4">
-                            <WhitelistDashboard />
+                            <Admin contractAddress={contractAddress} />
+                            {/* <WhitelistDashboard />
                             <AdminMint />
                             <AdminToggleMint />
 
-                            <AdminWithdraw />
+                            <AdminWithdraw /> */}
                         </div>
                     </div>
                 </div>
