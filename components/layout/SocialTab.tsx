@@ -34,7 +34,7 @@ const SocialTab: React.FC<SocialTab> = () => {
                         <FaDiscord />
                     </a>
                     <a
-                        href="#"
+                        href="https://magiceden.io/item-details/apechain/0x670c153118026660dc3bf93da7d80cf8107eb954/21"
                         target="_blank"
                         rel="noopener noreferrer"
 
