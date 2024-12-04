@@ -65,7 +65,7 @@ const MenuVoices: React.FC<MenuVoicesProps> = ({ onItemClick }) => {
               <FaDiscord />
             </a>
             <a
-              href="https://magiceden.io/item-details/apechain/0x670c153118026660dc3bf93da7d80cf8107eb954/21"
+              href="https://magiceden.io/collections/apechain/0x670c153118026660dc3bf93da7d80cf8107eb954"
               target="_blank"
               rel="noopener noreferrer"
               onClick={onItemClick}
