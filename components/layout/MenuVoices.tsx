@@ -22,23 +22,29 @@ const MenuVoices: React.FC<MenuVoicesProps> = ({ onItemClick }) => {
       <NavigationMenu>
         <NavigationMenuList className={styles.menuList}>
           <NavigationMenuItem className={styles.hideOnMobile}>
+            <Link href="/" onClick={handleClick} className={styles.hideOnMobile}>
+              Home
+            </Link>
+
+          </NavigationMenuItem>
+          <NavigationMenuItem className={styles.hideOnMobile}>
             <Link href="/mint" onClick={handleClick} className={styles.hideOnMobile}>
               Mint Membership
             </Link>
 
           </NavigationMenuItem>
-          {/* <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link href="/#" onClick={handleClick} className={styles.hideOnMobile}>
+          <NavigationMenuItem className={styles.hideOnMobile}>
+            <Link target="_blank" href="https://flipbookpdf.net/web/site/dd972b5b057d3b6a6ac6952566ce826e4f1c4d1e202412.pdf.htm" onClick={handleClick} className={styles.hideOnMobile}>
               Fumetto 1
             </Link>
 
           </NavigationMenuItem>
           <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link href="/#" onClick={handleClick} className={styles.hideOnMobile}>
+            <Link target="_blank" href="https://discord.com/channels/@me/1313619549651734618/1313799078668144762" onClick={handleClick} className={styles.hideOnMobile}>
               Fumetto 2
             </Link>
 
-          </NavigationMenuItem> */}
+          </NavigationMenuItem>
 
           <NavigationMenuItem className={styles.socialIcons}>
             <a
