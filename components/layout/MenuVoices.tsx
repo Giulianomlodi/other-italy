@@ -34,13 +34,13 @@ const MenuVoices: React.FC<MenuVoicesProps> = ({ onItemClick }) => {
 
           </NavigationMenuItem>
           <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link target="_blank" href="https://flipbookpdf.net/web/site/dd972b5b057d3b6a6ac6952566ce826e4f1c4d1e202412.pdf.htm" onClick={handleClick} className={styles.hideOnMobile}>
+            <Link target="_blank" href="https://flipbookpdf.net/web/site/dd972b5b057d3b6a6ac6952566ce826e4f1c4d1e202412.pdf.html" onClick={handleClick} className={styles.hideOnMobile}>
               Fumetto 1
             </Link>
 
           </NavigationMenuItem>
           <NavigationMenuItem className={styles.hideOnMobile}>
-            <Link target="_blank" href="https://discord.com/channels/@me/1313619549651734618/1313799078668144762" onClick={handleClick} className={styles.hideOnMobile}>
+            <Link target="_blank" href="https://flipbookpdf.net/web/site/6b98acfe2183ea5e2990ee549025974efddd7f5b202412.pdf.html" onClick={handleClick} className={styles.hideOnMobile}>
               Fumetto 2
             </Link>
 
