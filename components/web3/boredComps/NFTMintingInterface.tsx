@@ -25,7 +25,7 @@ const whitelistConfig = {
         "0xE43563A4c58aE485578597b7Cad0614517152c09",//G
         "0x3722A8bBA8AeEcAcb5ef45208822bf935FBADb75",//BurstLink
         "0x17650763d0cc8e64994e9d61c9f42e414fd1168c",//Luka
-        "0xC243C3cF61902A6ee4C95604231B05bF345Fb34C",//Luka
+        "0xC243C3cF61902A6ee4C95604231B05bF345Fb34C",//Tony
     ] as `0x${string}`[],
     topMembers: [
         "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d",
