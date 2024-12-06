@@ -18,9 +18,13 @@ const inter = Inter({
 
 const whitelistConfig = {
     members: [
-        "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d",
+        "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d", //Dep Test
         "0x129EBc4A440a15abA29978A22F676b2795a851c6",
         "0xA9b1A919528F1540CBf6FdB395A22501CcB7Df37",
+        "0xb9148E77f616Db263D2B661cC88Bac5aAF7Dfc54",//Dani
+        "0xE43563A4c58aE485578597b7Cad0614517152c09",//G
+        "0x3722A8bBA8AeEcAcb5ef45208822bf935FBADb75",//BurstLink
+        "0x17650763d0cc8e64994e9d61c9f42e414fd1168c",//Luka
     ] as `0x${string}`[],
     topMembers: [
         "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d",
