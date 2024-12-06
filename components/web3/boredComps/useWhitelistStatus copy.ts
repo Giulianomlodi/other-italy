@@ -20,33 +20,16 @@ export interface WhitelistStatus {
 export const useWhitelistStatus = (
   address: string | undefined,
   whitelistConfig: WhitelistConfig
-): WhitelistStatus => {
+) => {
   // Create Merkle trees once and memoize them
   const { memberTree, topMemberTree } = useMemo(() => {
     const createMerkleTree = (addresses: `0x${string}`[]) => {
-      // Debug: Log addresses being processed
-      console.log("Processing addresses for Merkle tree:", addresses);
-
-      // Ensure addresses are lowercase
-      const normalizedAddresses = addresses.map((addr) => addr.toLowerCase());
-      console.log("Normalized addresses:", normalizedAddresses);
-
-      const leafNodes = normalizedAddresses.map((addr) => {
-        // Create leaf node exactly as the contract does
-        const leaf = keccak256(
-          encodePacked(["address"] as const, [addr as `0x${string}`])
-        );
-        console.log(`Leaf node for ${addr}:`, leaf);
-        return leaf;
-      });
-
-      const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
-      console.log("Merkle Root:", tree.getHexRoot());
-
-      // Debug: Print the entire tree structure
-      console.log("Tree Layers:", tree.getLayers());
-
-      return tree;
+      const leafNodes = addresses.map((addr) =>
+        keccak256(
+          encodePacked(["address"], [addr.toLowerCase() as `0x${string}`])
+        )
+      );
+      return new MerkleTree(leafNodes, keccak256, { sortPairs: true });
     };
 
     return {
@@ -66,28 +49,23 @@ export const useWhitelistStatus = (
 
   useEffect(() => {
     if (!address) {
+      setStatus((prev) => ({
+        ...prev,
+        isMemberWhitelisted: false,
+        isTopMemberWhitelisted: false,
+        memberMerkleProof: [],
+        topMemberMerkleProof: [],
+      }));
       return;
     }
 
     const verifyAddress = (tree: MerkleTree) => {
-      // Debug: Log the verification process
-      console.log("Verifying address:", address.toLowerCase());
-
       const claimingAddress = keccak256(
-        encodePacked(["address"] as const, [
-          address.toLowerCase() as `0x${string}`,
-        ])
+        encodePacked(["address"], [address.toLowerCase() as `0x${string}`])
       );
-      console.log("Generated leaf for verification:", claimingAddress);
-
       const hexProof = tree.getHexProof(claimingAddress);
-      console.log("Generated Merkle proof:", hexProof);
-
       const rootHash = tree.getHexRoot();
-      console.log("Tree root hash:", rootHash);
-
       const verified = tree.verify(hexProof, claimingAddress, rootHash);
-      console.log("Verification result:", verified);
 
       return { verified, proof: hexProof as `0x${string}`[] };
     };
@@ -95,14 +73,18 @@ export const useWhitelistStatus = (
     const memberVerification = verifyAddress(memberTree);
     const topMemberVerification = verifyAddress(topMemberTree);
 
-    // Additional debug info
-    console.log("Final verification results:", {
-      memberVerification,
-      topMemberVerification,
-      address,
-      memberRoot: memberTree.getHexRoot(),
-      topMemberRoot: topMemberTree.getHexRoot(),
-    });
+    // Debug logging in development only
+    if (process.env.NODE_ENV === "development") {
+      console.group("Whitelist Verification");
+      console.log("Address:", address);
+      console.log("Member Merkle Root:", memberTree.getHexRoot());
+      console.log("Top Member Merkle Root:", topMemberTree.getHexRoot());
+      console.log("Is Member Whitelisted:", memberVerification.verified);
+      console.log("Is Top Member Whitelisted:", topMemberVerification.verified);
+      console.log("Member Merkle Proof:", memberVerification.proof);
+      console.log("Top Member Merkle Proof:", topMemberVerification.proof);
+      console.groupEnd();
+    }
 
     setStatus({
       isMemberWhitelisted: memberVerification.verified,

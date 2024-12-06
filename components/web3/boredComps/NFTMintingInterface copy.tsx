@@ -47,19 +47,11 @@ export default function NFTMintingInterface({
     const memberVideoRef = useRef<HTMLVideoElement>(null);
     const topMemberVideoRef = useRef<HTMLVideoElement>(null);
 
-    // Verify mint is active
-    const { data: isMintActive } = useReadContract({
-        address: contractAddress,
-        abi: italyABI,
-        functionName: 'activeMint'
-    });
-
     const {
         isMemberWhitelisted,
         isTopMemberWhitelisted,
         memberMerkleProof,
-        topMemberMerkleProof,
-        memberMerkleRoot
+        topMemberMerkleProof
     } = useWhitelistStatus(address, whitelistConfig);
 
     // Check claim status only when address is connected and whitelisted
@@ -78,13 +70,6 @@ export default function NFTMintingInterface({
         abi: italyABI,
         functionName: 'topMembersClaimed',
         args: shouldCheckTopMemberClaim ? [address] : undefined,
-    });
-
-    // Verify contract merkle root matches frontend
-    const { data: contractMemberMerkleRoot } = useReadContract({
-        address: contractAddress,
-        abi: italyABI,
-        functionName: 'membersMerkleRoot'
     });
 
     const { writeContractAsync } = useWriteContract();
@@ -108,15 +93,6 @@ export default function NFTMintingInterface({
             setErrorMessage('Transaction failed. Please try again.');
         }
     }, [pendingTxHash, isTxSuccess, isTxError]);
-
-    // Log merkle root comparison in development
-    useEffect(() => {
-        if (process.env.NODE_ENV === "development" && contractMemberMerkleRoot && memberMerkleRoot) {
-            console.log("Contract Merkle Root:", contractMemberMerkleRoot);
-            console.log("Frontend Merkle Root:", memberMerkleRoot);
-            console.log("Merkle roots match:", contractMemberMerkleRoot === memberMerkleRoot);
-        }
-    }, [contractMemberMerkleRoot, memberMerkleRoot]);
 
     // Handle client-side mounting
     useEffect(() => {
@@ -144,11 +120,6 @@ export default function NFTMintingInterface({
     const handleMint = async (type: 'basic' | 'pro') => {
         if (!address) {
             setErrorMessage('Please connect your wallet first');
-            return;
-        }
-
-        if (!isMintActive) {
-            setErrorMessage('Minting is not currently active');
             return;
         }
 
@@ -206,13 +177,7 @@ export default function NFTMintingInterface({
                         />
                     </CardContent>
                     <CardFooter className="flex flex-col gap-4">
-                        {!isMintActive ? (
-                            <Alert variant="destructive" className="bg-black/50 border border-red-500/50">
-                                <AlertDescription className={inter.className}>
-                                    Minting is not currently active
-                                </AlertDescription>
-                            </Alert>
-                        ) : isMemberWhitelisted ? (
+                        {isMemberWhitelisted ? (
                             memberHasClaimed ? (
                                 <Button
                                     className="w-full bg-zinc-400 hover:bg-zinc-400 hover:opacity-70 transition-opacity"
@@ -269,13 +234,7 @@ export default function NFTMintingInterface({
                         />
                     </CardContent>
                     <CardFooter className="flex flex-col gap-4">
-                        {!isMintActive ? (
-                            <Alert variant="destructive" className="bg-black/50 border border-red-500/50">
-                                <AlertDescription className={inter.className}>
-                                    Minting is not currently active
-                                </AlertDescription>
-                            </Alert>
-                        ) : isTopMemberWhitelisted ? (
+                        {isTopMemberWhitelisted ? (
                             topMemberHasClaimed ? (
                                 <Button
                                     className="w-full bg-yellow-500 hover:bg-yellow-500 hover:opacity-70 transition-opacity"
