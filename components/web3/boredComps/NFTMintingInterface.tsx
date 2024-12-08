@@ -27,6 +27,10 @@ const whitelistConfig = {
         "0x3722A8bBA8AeEcAcb5ef45208822bf935FBADb75",//BurstLink
         "0x17650763d0cc8e64994e9d61c9f42e414fd1168c",//Luka
         "0xC4c2260310a7AF529108AA46a9b69f3DD1D00284",//Tony
+        "0x0E0FfB6A3D7b177137f5d77e26a3b1D668c4DB11",//TestG3
+        "0xa2004B13Db88F0f8c5EE71a18D42EC653A61DA05",//Fra 1 
+        "0x18c37Aae0A48B2De89F43Ad01655A8afDcDB0B16",//Fra 2 
+        "0x6316a7c591E73772C457Db369C475149f55b827e",//Fra 3 
     ] as `0x${string}`[],
     topMembers: [
         "0x6C44aBA1aFEd210C7886095d0780cc9d92D6bd0d",
@@ -59,7 +63,8 @@ export default function NFTMintingInterface({
         isTopMemberWhitelisted,
         memberMerkleProof,
         topMemberMerkleProof,
-        memberMerkleRoot
+        memberMerkleRoot,
+        topMemberMerkleRoot
     } = useWhitelistStatus(address, whitelistConfig);
 
     // Check claim status only when address is connected and whitelisted
@@ -80,11 +85,17 @@ export default function NFTMintingInterface({
         args: shouldCheckTopMemberClaim ? [address] : undefined,
     });
 
-    // Verify contract merkle root matches frontend
+    // Verify contract merkle roots match frontend
     const { data: contractMemberMerkleRoot } = useReadContract({
         address: contractAddress,
         abi: italyABI,
         functionName: 'membersMerkleRoot'
+    });
+
+    const { data: contractTopMemberMerkleRoot } = useReadContract({
+        address: contractAddress,
+        abi: italyABI,
+        functionName: 'topMembersMerkleRoot'
     });
 
     const { writeContractAsync } = useWriteContract();
@@ -109,14 +120,28 @@ export default function NFTMintingInterface({
         }
     }, [pendingTxHash, isTxSuccess, isTxError]);
 
-    // Log merkle root comparison in development
+    // Log merkle roots comparison in development
     useEffect(() => {
-        if (process.env.NODE_ENV === "development" && contractMemberMerkleRoot && memberMerkleRoot) {
-            console.log("Contract Merkle Root:", contractMemberMerkleRoot);
-            console.log("Frontend Merkle Root:", memberMerkleRoot);
-            console.log("Merkle roots match:", contractMemberMerkleRoot === memberMerkleRoot);
+        if (process.env.NODE_ENV === "development") {
+            console.group('Merkle Roots Comparison');
+
+            if (contractMemberMerkleRoot && memberMerkleRoot) {
+                console.log('Members Merkle Root:');
+                console.log('- Frontend:', memberMerkleRoot);
+                console.log('- Contract:', contractMemberMerkleRoot);
+                console.log('- Match:', contractMemberMerkleRoot === memberMerkleRoot);
+            }
+
+            if (contractTopMemberMerkleRoot && topMemberMerkleRoot) {
+                console.log('\nTop Members Merkle Root:');
+                console.log('- Frontend:', topMemberMerkleRoot);
+                console.log('- Contract:', contractTopMemberMerkleRoot);
+                console.log('- Match:', contractTopMemberMerkleRoot === topMemberMerkleRoot);
+            }
+
+            console.groupEnd();
         }
-    }, [contractMemberMerkleRoot, memberMerkleRoot]);
+    }, [contractMemberMerkleRoot, memberMerkleRoot, contractTopMemberMerkleRoot, topMemberMerkleRoot]);
 
     // Handle client-side mounting
     useEffect(() => {
